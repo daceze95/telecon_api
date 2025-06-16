@@ -1,13 +1,11 @@
-import express, { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { User } from "../models/userModel";
 import { fromError } from "zod-validation-error";
 import { z as zod } from "zod";
 import { decryptPassword, encryptPassword, signToken } from "../utils";
 import { loginSchema, regSchema } from "../utils/validationSchema";
-import { AuthRequest } from "../interface";
-import path from "path";
 import { Types } from "mongoose";
-import fs from "fs";
+import { io } from "../bin/start";
 
 // export const userController = (req:Request, res:Response )  => {
 //   res.send('respond with a resource(s)');
@@ -144,7 +142,7 @@ export const login = async (
 };
 
 export const uploadProfile = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -157,7 +155,7 @@ export const uploadProfile = async (
     }
 
     const user = await User.findByIdAndUpdate(
-      { _id: req.user._id },
+      { _id: req.user?._id },
       { avatar: `/uploads/${req.file.filename}` },
       { new: true }
     );

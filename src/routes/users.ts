@@ -1,4 +1,4 @@
-import express, { Application, RequestHandler } from 'express';
+import express from 'express';
 import { getUser, getUsers, uploadProfile, userController } from '../controllers/userController';
 import { authMiddleWare } from '../auth/index';
 import { upload } from '../utils/index';
@@ -7,9 +7,9 @@ const router = express.Router();
 
 /* GET users listing. */
 router
-// .get('/', userController as Application)
-.get('/', getUsers as Application)
-.get('/:userId', getUser as Application)
-.post('/upload-profile', authMiddleWare as RequestHandler, upload.single('avatar'), uploadProfile as RequestHandler)
+// .get('/', userController )
+.get('/', getUsers )
+.get('/:userId', getUser )
+.post('/upload-profile', authMiddleWare, upload.single('avatar'), uploadProfile)
 
 export default router;

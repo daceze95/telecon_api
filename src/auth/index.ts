@@ -4,7 +4,7 @@ import { AuthRequest } from "../interface";
 import { User } from "../models/userModel";
 
 export const authMiddleWare = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {

@@ -1,3 +1,5 @@
+import './types/global-types';
+
 import express  from 'express';
 import path  from 'path';
 import 'dotenv/config';
@@ -27,4 +29,3 @@ app.use(`${BASE_URL}/`, indexRouter);
 app.use(`${BASE_URL}/users`, usersRouter);
 
 export default app;
-
