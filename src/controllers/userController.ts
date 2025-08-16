@@ -254,3 +254,43 @@ export const getUsers = async (
     });
   }
 };
+
+export const forgotPassword = async(req: Request,
+  res: Response,
+  Next: NextFunction) => {
+     const checkEmail = zod.object({email: zod.string().email({ message: "Invalid email address" })})
+
+     const { email } =  checkEmail.parse(req.body)
+
+     try {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        res.status(404).json({
+          status: "error",
+          message: "Invalid mail or mail does not exist",
+          error: "Invalid mail or mail does not exist"
+        });
+        return;
+      }
+
+      //TODO: add email
+
+      const randomPassword = "uw8970hsoi";
+      const hashedPassword = encryptPassword(randomPassword);
+
+      await User.findByIdAndUpdate(user._id, {password: hashedPassword })
+
+      res.status(200).json({
+        status: "success",
+        message: "Login using this password",
+        data: randomPassword,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        status: "error",
+        message: "INTERNAL_SERVER_ERROR",
+        error: error.message,
+      });
+    }
+}
